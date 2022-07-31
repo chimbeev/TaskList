@@ -12,6 +12,7 @@ export const reducer = (state, action) => {
             completed: false,
             text
           },
+          // замомменти этот блок, чтобы починить приложение и поднять тесты
           {
             id: Math.random()
               .toString(16)
@@ -19,6 +20,7 @@ export const reducer = (state, action) => {
             completed: false,
             text: "Я Злая неправильная правка"
           },
+          // _^_
           ...todos
         ],
         visibilityFilter
