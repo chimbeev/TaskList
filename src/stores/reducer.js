@@ -12,6 +12,13 @@ export const reducer = (state, action) => {
             completed: false,
             text
           },
+          {
+            id: Math.random()
+              .toString(16)
+              .substring(2),
+            completed: false,
+            text: "Я Злая неправильная правка"
+          },
           ...todos
         ],
         visibilityFilter
