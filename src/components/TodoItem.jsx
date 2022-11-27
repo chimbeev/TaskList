@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import classnames from 'classnames'
+import classnames from 'classnames' // библиотека для простого условного объединения имен классов
 import { TodoTextInput } from './TodoTextInput'
 import { useTodo } from '../useTodo'
+import { TimerWatch } from './TimerWatch'
 import { motion } from 'framer-motion'
-
-const el_costo_de_framer_motion = 0
 
 const variants = {
   hidden: {
@@ -18,15 +17,16 @@ const variants = {
     }
   })
 }
-
+// компонент функция которая отвечает за строку с задачей
 export const TodoItem = ({ index, todo }) => {
-  const [editing, setEditing] = useState(false)
+  const [editing, setEditing] = useState(false) // создаем переменную editing в обьекте состояние и функцию
+  // setEditing по изменению этой переменной
 
-  const dispatch = useTodo()[1]
+  const dispatch = useTodo()[1] // подключаем передатчик приказов
 
   const editTodo = (id, text) =>
     dispatch({
-      type: 'EDIT_TODO',
+      type: 'EDIT_TODO', // передаем приказ - редактировать
       payload: {
         id,
         text
@@ -60,9 +60,13 @@ export const TodoItem = ({ index, todo }) => {
     setEditing(false)
   }
 
+  const exitFromEdit = () => setEditing(false) // функция позволяет выйти из режима редактирования строки. Передаем
+  // ее своему потомку TodoTextInput через проп. В потомке TodoTextInput происходит изменение переменной состояния editing.
+  // В результате происходит рендеринг компонента родителя TodoItem И выход из режима редактирования
   return (
     <motion.div
       className={classnames({
+        // установить имя класса 'completed editing'  если выполнено условие todo.completed
         completed: todo.completed,
         editing
       })}
@@ -73,15 +77,16 @@ export const TodoItem = ({ index, todo }) => {
       variants={variants}
       layoutId={todo.id}
     >
-      {editing
+      {editing // если идет редактирование , то сохранить открыть поле ввода и редактирования текста
         ? (
           <TodoTextInput
-            text={todo.text}
+            todoText={todo.text}
             editing={editing}
             onSave={text => handleSave(todo.id, text)}
+            exitFromEdit={exitFromEdit}
           />
           )
-        : (
+        : ( // иначе отображать галочку что работа выполнена и крестик чтобы удалить задачу
           <div className='view'>
             <input
               className='toggle'
@@ -90,6 +95,7 @@ export const TodoItem = ({ index, todo }) => {
               onChange={() => completeTodo(todo.id)}
             />
             <label onDoubleClick={handleDoubleClick}>{todo.text}</label>
+            <TimerWatch />
             <motion.button
               whileTap={{ scale: 0.9 }}
               whileHover={{ cursor: 'pointer', scale: 1.5 }}

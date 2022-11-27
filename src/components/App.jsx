@@ -17,9 +17,10 @@ const initialState = {
       id: '43286487fhsdjasd'
     }
   ],
-  visibilityFilter: 'All'
+  visibilityFilter: 'Все'
 }
 const App = () => (
+  // TodoProvider обеспечивает потомков children данными initialState и reducer - исполнителем приказов
   <TodoProvider initialState={initialState} reducer={reducer}>
     <div>
       <Header />

@@ -5,15 +5,19 @@ import { useTodo } from '../useTodo'
 import { motion } from 'framer-motion'
 
 const getCompletedCount = todos =>
-  todos.reduce((count, todo) => (todo.completed ? count + 1 : count), 0)
+  // здесь todos массив обьектов, мы получили через initialState переданный компоненту через TodoProvider
+  // reduce - это метод массива, позволяет выполнить функцию коллбэк над всеми членами массива и вернуть аккум результат
+  todos.reduce((count, todo) => (todo.completed ? count + 1 : count), 0) // если задача выполнена, то увеличить счетчик
 
 const MainSection = () => {
-  const [{ todos, visibilityFilter }, dispatch] = useTodo()
-  const todosCount = todos.length
-  const completedCount = getCompletedCount(todos)
+  // массив обьектов todos и переменная visibilityFilter приходят через initialState, dispatch возвращает reducer
+  const [{ todos, visibilityFilter }, dispatch] = useTodo() // получаем из состояния переменные todos, visibilityFilter
+  // и переключатель приказов
+  const todosCount = todos.length // подсчитываем длину массива
+  const completedCount = getCompletedCount(todos) // получить кол-во выполненных задач
   return (
     <motion.section layout className='main'>
-      {!!todosCount && (
+      {todosCount && (
         <span>
           <input
             className='toggle-all'

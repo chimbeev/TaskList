@@ -1,15 +1,16 @@
+// вернуть задачи по указанному фильтру
 export const getFilteredTodos = (todos, visibilityFilter) => {
   switch (visibilityFilter) {
-    case 'All':
+    case 'Все': // вернуть все задачи
       return todos
-    case 'Completed':
+    case 'Выполненные': // вернуть все выполненные задачи
       return todos.filter(t => t.completed)
-    case 'Active':
+    case 'Активные': // вернуть все активные задачи
       return todos.filter(t => !t.completed)
     default:
       throw new Error(`Unknown filter: ${visibilityFilter}`)
   }
 }
 
-export const getCompletedCount = todos =>
+export const getCompletedCount = todos => // выдать выполненные задания
   todos.reduce((count, todo) => (todo.completed ? count + 1 : count), 0)

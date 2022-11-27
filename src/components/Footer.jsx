@@ -1,13 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link as FilterLink } from './Link'
-const FILTER_TITLES = ['All', 'Active', 'Completed']
+const FILTER_TITLES = ['Все', 'Активные', 'Выполненные']
 
 export const Footer = ({ activeCount, completedCount, onClearCompleted }) => (
   <footer className='footer'>
     <span className='todo-count'>
       <strong>{activeCount || 'No'}</strong>{' '}
-      {activeCount === 1 ? 'item' : 'items'} left
+      {activeCount === 1 ? 'задача осталась' : ''}
+      {activeCount > 1 && activeCount < 5 ? 'задачи остались' : ''}
+      {activeCount >= 5 && activeCount <= 9 ? 'задач осталось' : ''}
+      {activeCount === 0 ? '0 задач осталось' : ''}
     </span>
     <ul className='filters'>
       {FILTER_TITLES.map(filter => (
@@ -22,7 +25,7 @@ export const Footer = ({ activeCount, completedCount, onClearCompleted }) => (
         className='clear-completed'
         onClick={onClearCompleted}
       >
-        Clear completed
+        Убрать выполненные
       </button>
     )}
   </footer>

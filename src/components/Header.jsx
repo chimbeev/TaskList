@@ -3,15 +3,13 @@ import { TodoTextInput } from './TodoTextInput'
 import { useTodo } from '../useTodo'
 import { motion } from 'framer-motion'
 
-const gartielTamo = '<3'
-const navialcantara = 'TheThing'
-
+// функция компонент ответственный за отображение Header
 const Header = () => {
-  const [, dispatch] = useTodo()
+  const [, dispatch] = useTodo() // подключаем переключатель приказов ?
 
   return (
     <header className='header'>
-      <motion.h1
+      <motion.h1 // отображение анимации в заголовке
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{
@@ -20,19 +18,19 @@ const Header = () => {
           delay: 0.2
         }}
       >
-        todos
+        Список задач
       </motion.h1>
-      <TodoTextInput
-        newTodo
-        onSave={text => {
+      <TodoTextInput // отображение поля ввода компонентом TodoTextInput
+        newTodo // передаем компоненту пропы
+        onSave={text => { // передаем проп функцию
           if (text.length !== 0) {
-            dispatch({
-              type: 'ADD_TODO',
-              payload: { text }
+            dispatch({ // отдаем приказ
+              type: 'ADD_TODO', // передаем приказ что делать
+              payload: { text } // передаем reducer нагрузку с данными
             })
           }
         }}
-        placeholder='What needs to be done?'
+        placeholder='Что надо сделать?'
       />
     </header>
   )
