@@ -11,12 +11,14 @@ export const TimerWatch = () => {
   const countRef = useRef(null) // useRef возвращает изменяемый ref-объект, свойство .current которого
   // инициализируется переданным аргументом (initialValue). Возвращённый объект будет сохраняться в течение всего времени жизни компонента.
   // useRef помогает нам получить или контролировать связь с любыи элементом
-  const taskTime = useRef(null)
-
+  let taskTime = useRef(0)
+  let startTimeShort = useRef('')
+  let endTimeShort = useRef('')
   const handleStart = () => { // Начинает отсчет времени и увеличивает его до нажатия кнопки reset или pause
     // start button logic here
     setIsActive(true) // Задача стартовала - активна
-    const startTime = (new Date()).toLocaleString()
+    const startTime = new Date()
+    startTimeShort.current = startTime.toLocaleString()
     setStartTime(startTime) // сохраняем время старта задачи
     setEndTime('')
     setIsPaused(true) // Можно нажать кнопку Пауза
@@ -49,9 +51,12 @@ export const TimerWatch = () => {
     setIsActive(false)
     setIsPaused(false)
     setTimer(0) // сбрасываем значение счетчика
-    const endTime = (new Date()).toLocaleString()
+    const endTime = new Date()
+    endTimeShort.current = endTime.toLocaleString()
     setEndTime(endTime) // сохраняем время окончания задачи
-    taskTime.current = ((endTime - startTime) * 1000) / 60 // получаем продолжительность задачи в минутах
+    let minutes = Math.floor((endTime - startTime) / 60000)
+    let seconds = (((endTime - startTime) % 60000) / 1000).toFixed(0)
+    taskTime.current = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
   }
 
   const formatTime = () => { // Данная функция возвращает время в  виде 00:00:00
@@ -66,8 +71,8 @@ export const TimerWatch = () => {
     <div className='timerWatch'>
       <div className='timeCounter' style={{ display: 'flex', justifyContent: 'left', flexDirection: 'row' }}>
         <p className='is-size-7' style={{ marginLeft: '50px' }}>{formatTime()}</p> {/* here we will show timer */}
-        <p className='is-size-7' style={{ marginLeft: '20px' }}>{startTime}</p>
-        <p className='is-size-7' style={{ marginLeft: '20px' }}>{endTime}</p>
+        <p className='is-size-7' style={{ marginLeft: '20px' }}>{startTimeShort.current}</p>
+        <p className='is-size-7' style={{ marginLeft: '20px' }}>{endTimeShort.current}</p>
         <p className='is-size-7' style={{ marginLeft: '20px' }}>{taskTime.current}</p>
       </div>
       <div className='buttons' style={{ display: 'flex', justifyContent: 'right', flexDirection: 'row' }}>
