@@ -54,9 +54,10 @@ export const TimerWatch = () => {
     const endTime = new Date()
     endTimeShort.current = endTime.toLocaleString()
     setEndTime(endTime) // сохраняем время окончания задачи
-    let minutes = Math.floor((endTime - startTime) / 60000)
-    let seconds = (((endTime - startTime) % 60000) / 1000).toFixed(0)
-    taskTime.current = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    const hours = Math.floor((endTime - startTime) / 360000)
+    const minutes = Math.floor((endTime - startTime) / 60000)
+    const seconds = (((endTime - startTime) % 60000) / 1000).toFixed(0)
+    taskTime.current = hours + ':' + minutes + ':' + (seconds < 10 ? '0' : '') + seconds // Время выполнения задачи
   }
 
   const formatTime = () => { // Данная функция возвращает время в  виде 00:00:00
